@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true" name="XMLConfigTest">
+
+    <Appenders>
+        <Appender type="Console" name="CONSOLE">
+            <Layout type="PatternLayout" pattern="gRPC POC %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Appender>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="CONSOLE"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

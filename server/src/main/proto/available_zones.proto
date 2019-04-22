@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "me.grpc.poc";
+option java_outer_classname = "AvailableZonesProto";
+option objc_class_prefix = "AZP";
+
+package az;
+
+service AvailableZones {
+  rpc SelectZone (AvailableZonesInput) returns (AvailableZonesOutput) {}
+}
+
+message AvailableZonesInput {
+  int32 cpus = 1;
+  int32 ram = 2;
+  int32 disk = 3;
+  int32 vports = 4;
+  bool sriov = 5;
+  string location = 6;
+}
+
+message AvailableZonesOutput {
+  string compute = 1;
+  map<string, int32> physical_network_map = 2;
+  bool sriov = 3;
+}
