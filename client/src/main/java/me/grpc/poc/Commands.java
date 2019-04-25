@@ -3,7 +3,6 @@ package me.grpc.poc;
 import me.grpc.poc.AvailableZonesProto.AvailableZonesInput;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
 public class Commands {
@@ -11,18 +10,18 @@ public class Commands {
 
     @ShellMethod(key = "get", value = "Get available zones")
     public String sendCommand(
-            @ShellOption int cpus,
-            @ShellOption int ram,
-            @ShellOption int disk,
-            @ShellOption int vport,
-            @ShellOption boolean sriov,
-            @ShellOption String location
+            int cpus,
+            int ram,
+            int disk,
+            int vports,
+            boolean sriov,
+            String location
     ) {
         return client.getAvailableZones(AvailableZonesInput.newBuilder()
                 .setCpus(cpus)
                 .setRam(ram)
                 .setDisk(disk)
-                .setVports(vport)
+                .setVports(vports)
                 .setSriov(sriov)
                 .setLocation(location)
                 .build()).toString();

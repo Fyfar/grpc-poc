@@ -21,7 +21,7 @@ public class AvailableZonesClient {
 
     AvailableZonesClient(ManagedChannel channel) {
         this.channel = channel;
-        blockingStub = AvailableZonesGrpc.newBlockingStub(channel);
+        blockingStub = AvailableZonesGrpc.newBlockingStub(channel).withCallCredentials(new TokenAuthCredentials());
     }
 
     public void shutdown() throws InterruptedException {
@@ -29,8 +29,6 @@ public class AvailableZonesClient {
     }
 
     public AvailableZonesOutput getAvailableZones(AvailableZonesInput input) {
-        log.info("Send payload: {}", input.toString());
-
         try {
             return blockingStub.selectZone(input);
         } catch (StatusRuntimeException e) {

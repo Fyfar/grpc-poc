@@ -4,6 +4,7 @@ import static java.lang.String.format;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.ServerInterceptors;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import me.grpc.poc.AvailableZonesGrpc.AvailableZonesImplBase;
@@ -22,7 +23,9 @@ public class AvailableZonesServer {
 
     private void start() throws IOException {
         server = ServerBuilder.forPort(PORT)
-                .addService(new AvailableZones())
+                .addService(ServerInterceptors.intercept(new AvailableZones(),
+                        new TokenAuthInterceptor(),
+                        new RequestLoggingInterceptor()))
                 .build()
                 .start();
         log.info("Server started on port: {}", PORT);
@@ -65,7 +68,6 @@ public class AvailableZonesServer {
                             String.format("CPU_%d_networks_%d_compute_%s", request.getCpus(), 2, UUID.randomUUID().toString()), randomInt(4))
                     .build();
 
-            log.info("Response: {}", response);
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
